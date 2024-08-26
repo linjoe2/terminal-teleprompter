@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teleprompter Control Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .control-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .response {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Teleprompter Control Panel</h1>
+    <div class="container">
+        <div class="control-group">
+            <button onclick="sendRequest('/play', 'POST')">Play Teleprompter</button>
+            <button onclick="sendRequest('/pause', 'POST')">Pause Teleprompter</button>
+            <button onclick="sendRequest('/restart', 'POST')">Restart Teleprompter</button>
+            <button onclick="sendRequest('/reset', 'POST')">Reset Teleprompter</button>
+            <button onclick="sendRequest('/jump_back', 'POST')">Jump Back 5 Lines</buttEnter your text here..."></textarea>
+            <button onclick="updateText()">Update Text</button>
+        </div>
+        <div id="response" class="response"></div>
+    </div>
+
+    <script>
+        async function sendRequest(url, method, body = null) {
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: body ? JSON.stringify(body) : null
+                });
+                const result = await response.json();
+                document.getElementById('response').innerText = JSON.stringify(result, null, 2);
+            } catch (error) {
+                document.getElementById('response').innerText = 'Error: ' + error;
+            }
+        }
+
+        function setSpeed() {
+            const speed = document.getElementById('speed').value;
+            sendRequest('/set_speed', 'POST', { speed: parseFloat(speed) });
+        }
+
+        function updateText() {
+            const text = document.getElementById('text').value;
+          xt });
+        }
+    </script>
+</body>
+</html>
+
+
